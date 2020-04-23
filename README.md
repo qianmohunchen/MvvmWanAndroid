@@ -1,0 +1,2 @@
+# MvvmWanAndroid
+这是一个基于mvvm的架构的app，主要是学习jetpack以及对retrofit+rxjava2的封装加速自己业务层的开发
