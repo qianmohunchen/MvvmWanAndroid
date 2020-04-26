@@ -71,6 +71,8 @@ class BaseObserver<T : BaseResponse<*>>(
             }
         } else if (e is IOException) {
             Toast.makeText(FrameworkInitializer.getContext(), "io异常", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(FrameworkInitializer.getContext(), "未知异常", Toast.LENGTH_SHORT).show()
         }
 
     }

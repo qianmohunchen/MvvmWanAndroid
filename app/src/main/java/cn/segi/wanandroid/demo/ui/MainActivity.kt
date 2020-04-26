@@ -10,6 +10,7 @@ import cn.segi.wanandroid.R
 import cn.segi.wanandroid.demo.base.view.BaseActivity
 import cn.segi.wanandroid.demo.ui.common.Constant
 import cn.segi.wanandroid.demo.ui.home.view.HomeFragment
+import cn.segi.wanandroid.demo.ui.system.view.SystemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
@@ -83,6 +84,9 @@ class MainActivity : BaseActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_system -> {
+                    fab_add.visibility = View.VISIBLE
+                    setToolBarTitle(toolbar, getString(R.string.navigation_system))
+                    switchFragment(Constant.SYSTEM)
                     return@setOnNavigationItemSelectedListener true
                 }
 
@@ -130,7 +134,7 @@ class MainActivity : BaseActivity() {
         if (fragment == null) {
             when (index) {
                 Constant.HOME -> fragment = HomeFragment.getInstance()
-                Constant.SYSTEM -> fragment = HomeFragment.getInstance()
+                Constant.SYSTEM -> fragment = SystemFragment.getInstance()
                 Constant.NAVIGATION -> fragment = HomeFragment.getInstance()
                 Constant.WECHAT -> fragment = HomeFragment.getInstance()
                 Constant.PROJECT -> fragment = HomeFragment.getInstance()

@@ -1,7 +1,9 @@
 package cn.segi.wanandroid.demo.ui.home.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +23,7 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import kotlinx.android.synthetic.main.home_banner.view.*
-import java.util.ArrayList
+import java.util.*
 
 class HomeFragment : BaseFragment() {
 
@@ -48,6 +50,12 @@ class HomeFragment : BaseFragment() {
             return HomeFragment()
         }
     }
+
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        createLoading(context, true, "稍等一会")
+//    }
 
     override fun getLayoutId(): Int {
         return R.layout.home_fragment
@@ -90,25 +98,28 @@ class HomeFragment : BaseFragment() {
                 startActivity(intent)
             }
         }
-
-
+        createLoading(activity!!, true, "稍等一会")
     }
 
+
     override fun initData() {
+        showLoading()
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.loadHomeArticleData(mCurrentPage)
         homeViewModel.getHomeData().observe(
             this,
             Observer<BaseResponse<HomeArticleResponse>> { homeArticleResponse ->
-
+                dissmissLoading()
                 homeAdapter.setNewData(homeArticleResponse.data.datas)
                 homeAdapter.notifyDataSetChanged()
                 mSrlRefresh.setRefreshing(false)
+                homeAdapter.loadMoreComplete()
             })
 
         homeViewModel.loadBannerDatas()
         homeViewModel.getBannerDatas()
             .observe(this, Observer<BaseResponse<List<BannerResponse>>> { bannerResponses ->
+                dissmissLoading()
                 setBannerData(bannerResponses.data)
             })
     }
@@ -119,6 +130,7 @@ class HomeFragment : BaseFragment() {
     }
 
     fun onLoadMoreData() {
+        Log.d("home","onLoadMoreData")
         homeViewModel.loadHomeArticleData(++mCurrentPage)
     }
 
